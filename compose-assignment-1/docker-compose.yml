@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  drupal: 
+    image: drupal:9
+    ports:
+      - 8080:80
+    networks:
+      - drupal_network
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+
+  postgresql:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=drupal
+      - POSTGRES_USER=drupal
+      - POSTGRES_PASSWORD=123456
+    networks:
+      - drupal_network
+    
+networks:
+  drupal_network:
+    driver: bridge
+
+volumes:
+  drupal-modules: 
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
